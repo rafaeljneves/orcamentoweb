@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h4>Orçamento #</h4>
+    {% if itens %}
+        <table class="table table-bordered">
+
+        {% for item in itens %}
+           <tr>
+            <td>{{ item.descricao }}</td>
+            <td>{{ item.valor }}</td>
+           </tr>
+        {% endfor %}
+
+        </table>
+
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,8 @@
+.env
+.idea
+*.sqlite3
+*pyc
+migrations
+__pycache__
+staticfiles
+.ipynb_checkpoints/
