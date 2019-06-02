@@ -35,10 +35,10 @@
       <form class="navbar-form navbar-left" method="POST">
         {% csrf_token %}
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Descrição" name="descricao">
-          <input type="text" class="form-control" placeholder="Valor (R$)" name="valor">
+          <input type="text" class="form-control" placeholder="Descrição" name="descricao" autofocus="autofocus" tabindex="1">
+          <input type="text" class="form-control" placeholder="Valor (R$)" name="valor" tabindex="2">
             </div>
-        <button type="submit" class="btn btn-primary">Incluir</button>
+        <button type="submit" class="btn btn-primary" tabindex="3">Incluir</button>
       </form>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

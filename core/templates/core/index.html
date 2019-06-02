@@ -1,7 +1,10 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-    <h4>Orçamento #</h4>
+    <h4>Orçamento #          -  <a href="{% url 'excluir' %}"><button type="button" class="btn btn-default btn-sm" tabindex="5" {{ status }}>
+          <span class="glyphicon glyphicon-trash"></span> Excluir
+        </button></a>
+        <p><strong>R$:</strong> {{ valor_total|floatformat:2 }}</p></h4>
     {% if itens %}
         <table class="table table-bordered">
 
