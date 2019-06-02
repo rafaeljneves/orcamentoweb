@@ -1,9 +1,9 @@
 from django.db import models
 
-# Create your models here.
 
 class ItemOrcamento(models.Model):
     descricao = models.CharField(max_length=200)
+    quantidade = models.IntegerField( default=1)
     valor = models.DecimalField(
                                 'valor',
                                 max_digits=9,

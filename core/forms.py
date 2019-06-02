@@ -4,4 +4,4 @@ from .models import ItemOrcamento
 class ItemOrcamentoForm(forms.ModelForm):
     class Meta:
         model = ItemOrcamento
-        fields= ["descricao", "valor"]
+        fields= ["descricao", "quantidade", "valor"]

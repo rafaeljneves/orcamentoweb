@@ -28,6 +28,13 @@
       <a class="navbar-brand" href="#">Item</a>
     </div>
 
+    <style>
+        .form-control
+        {
+            font-size:12px;
+        }
+    </style>
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         </li>
@@ -35,10 +42,11 @@
       <form class="navbar-form navbar-left" method="POST">
         {% csrf_token %}
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Descrição" name="descricao" autofocus="autofocus" tabindex="1">
-          <input type="text" class="form-control" placeholder="Valor (R$)" name="valor" tabindex="2">
-            </div>
-        <button type="submit" class="btn btn-primary" tabindex="3">Incluir</button>
+            <input type="text" class="form-control" placeholder="Descrição" name="descricao" autofocus="autofocus" tabindex="1">
+            <input type="text" maxlength="2" size="2" class="form-control" placeholder="Qtd" name="quantidade" tabindex="2">
+            <input type="text" maxlength="10" size="13" class="form-control" placeholder="Valor unitário (R$)" name="valor" tabindex="3">
+        </div>
+        <button type="submit" class="btn btn-primary" tabindex="4">Incluir</button>
       </form>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
