@@ -4,6 +4,12 @@ from .forms import ItemOrcamentoForm
 from django.contrib import messages
 from django.db.models import Sum
 
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+from weasyprint import HTML
+
 
 def index(request):
     if request.method =='POST':
@@ -28,7 +34,7 @@ def index(request):
            status = None
         else:
            status = 'disabled'
-        print('status: ', str(itens))
+
         context = {'itens': itens,
                    'valor_total': valor_total,
                    'status': status}
@@ -44,3 +50,30 @@ def excluir(request):
 
     return render(request, 'core/index.html', context)
 
+
+def html_to_pdf_view(request):
+    itens = ItemOrcamento.objects.all
+    valor_total = list(ItemOrcamento.objects.aggregate(Sum('valor')).values())[0]
+
+    if valor_total != None:
+        status = None
+    else:
+        status = 'disabled'
+
+    context = {'itens': itens,
+               'valor_total': valor_total,
+               'status': status
+              }
+
+    html_string = render_to_string('core/orcamento_template.html', context)
+
+    html = HTML(string=html_string)
+    html.write_pdf(target='/tmp/mypdf.pdf');
+
+    fs = FileSystemStorage('/tmp')
+    with fs.open('mypdf.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+        return response
+
+    return response

@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-    <h4>Orçamento #          -  <a href="{% url 'excluir' %}"><button type="button" class="btn btn-default btn-sm" tabindex="5" {{ status }}>
+    <h4>Orçamento #          -  <a href="{% url 'excluir' %}"><button type="button" class="btn btn-default btn-sm" tabindex="6" {{ status }}>
           <span class="glyphicon glyphicon-trash"></span> Excluir
         </button></a>
         <p><strong>R$:</strong> {{ valor_total|floatformat:2 }}</p></h4>
@@ -17,6 +17,9 @@
         {% endfor %}
 
         </table>
+        <a href="{% url 'html_to_pdf_view' %}">
+            <button type="submit" class="btn btn-success" tabindex="4" {{ status }}><span class="glyphicon glyphicon-ok"></span>  Finalizar</button>
+        </a>
 
 
     {% endif %}
