@@ -6,3 +6,4 @@ migrations
 __pycache__
 staticfiles
 .ipynb_checkpoints/
+.venvorcamento
