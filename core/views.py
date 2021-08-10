@@ -10,6 +10,8 @@ from django.template.loader import render_to_string
 
 from weasyprint import HTML
 
+CORE_VIEWS = 'core/index.html'
+
 
 def index(request):
     if request.method =='POST':
@@ -24,7 +26,7 @@ def index(request):
                         'valor_total': valor_total}
 
 
-            return render(request, 'core/index.html', context)
+            return render(request, CORE_VIEWS, context)
     else:
         itens = ItemOrcamento.objects.all
         valor_total = list(ItemOrcamento.objects.aggregate(Sum('valor')).values())[0]
@@ -38,7 +40,7 @@ def index(request):
         context = {'itens': itens,
                    'valor_total': valor_total,
                    'status': status}
-        return render(request, 'core/index.html', context)
+        return render(request, CORE_VIEWS, context)
 
 
 def excluir(request):
@@ -48,7 +50,7 @@ def excluir(request):
                'valor_total': 0.00,
                'status': 'disabled'}
 
-    return render(request, 'core/index.html', context)
+    return render(request, CORE_VIEWS, context)
 
 
 def html_to_pdf_view(request):
@@ -74,6 +76,6 @@ def html_to_pdf_view(request):
     with fs.open('mypdf.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
-        return response
-
     return response
+
+    

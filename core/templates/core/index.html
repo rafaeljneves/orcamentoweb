@@ -6,8 +6,12 @@
         </button></a>
         <p><strong>R$:</strong> {{ valor_total|floatformat:2 }}</p></h4>
     {% if itens %}
-        <table class="table table-bordered">
-
+        <table class="table table-bordered" aria-describedby="tabela_orcamento">
+        <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col">Qtd</th>
+            <th scope="col">Valor</th>
+        </tr>
         {% for item in itens %}
            <tr>
             <td>{{ item.descricao }}</td>
