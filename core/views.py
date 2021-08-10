@@ -7,14 +7,16 @@ from django.db.models import Sum
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_GET
+
+import tempfile
 
 from weasyprint import HTML
 
 CORE_VIEWS = 'core/index.html'
 
 
-@require_http_methods(["GET", "POST"])  
+@require_GET
 def index(request):
     if request.method =='POST':
         form = ItemOrcamentoForm(request.POST or None)
@@ -45,7 +47,7 @@ def index(request):
         return render(request, CORE_VIEWS, context)
 
 
-@require_http_methods(["GET", "POST"])  
+@require_http_methods(["POST"])  
 def excluir(request):
     ItemOrcamento.objects.all().delete()
 
@@ -57,7 +59,7 @@ def excluir(request):
 
 
 
-@require_http_methods(["GET", "POST"])  
+@require_http_methods(["POST"])  
 def html_to_pdf_view(request):
     itens = ItemOrcamento.objects.all
     valor_total = list(ItemOrcamento.objects.aggregate(Sum('valor')).values())[0]
@@ -75,9 +77,15 @@ def html_to_pdf_view(request):
     html_string = render_to_string('core/orcamento_template.html', context)
 
     html = HTML(string=html_string)
-    html.write_pdf(target='/tmp/mypdf.pdf');
 
-    fs = FileSystemStorage('/tmp')
+    
+
+    file = tempfile.TemporaryFile(dir="/tmp", mode="w+") # Compliant
+    #html.write_pdf(target='/tmp/mypdf.pdf');
+    html.write_pdf();
+
+    #fs = FileSystemStorage('/tmp')
+    fs = FileSystemStorage(file)
     with fs.open('mypdf.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
