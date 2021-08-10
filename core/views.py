@@ -7,12 +7,14 @@ from django.db.models import Sum
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.views.decorators.http import require_http_methods
 
 from weasyprint import HTML
 
 CORE_VIEWS = 'core/index.html'
 
 
+@require_http_methods(["GET", "POST"])  
 def index(request):
     if request.method =='POST':
         form = ItemOrcamentoForm(request.POST or None)
@@ -43,6 +45,7 @@ def index(request):
         return render(request, CORE_VIEWS, context)
 
 
+@require_http_methods(["GET", "POST"])  
 def excluir(request):
     ItemOrcamento.objects.all().delete()
 
@@ -53,6 +56,8 @@ def excluir(request):
     return render(request, CORE_VIEWS, context)
 
 
+
+@require_http_methods(["GET", "POST"])  
 def html_to_pdf_view(request):
     itens = ItemOrcamento.objects.all
     valor_total = list(ItemOrcamento.objects.aggregate(Sum('valor')).values())[0]
