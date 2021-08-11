@@ -16,7 +16,7 @@ from weasyprint import HTML
 CORE_VIEWS = 'core/index.html'
 
 
-@require_GET
+@require_http_methods(["POST", "GET"])  
 def index(request):
     if request.method =='POST':
         form = ItemOrcamentoForm(request.POST or None)

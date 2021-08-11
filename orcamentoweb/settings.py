@@ -88,7 +88,8 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = os.environ.get('SECRET_KEY')
+from decouple import config
+SECRET_KEY = config('SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 #TEMPLATE_LOADERS = (
@@ -97,7 +98,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 ##     'django.template.loaders.eggs.Loader',
 #)
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,6 +130,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'core',
+    'orcamentoweb',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -170,7 +172,9 @@ TEMPLATES = [{
             'django.template.loaders.app_directories.Loader',
         ],
         'context_processors': [
-                "django.contrib.auth.context_processors.auth",
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
     },
 }]
