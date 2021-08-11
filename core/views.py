@@ -61,35 +61,42 @@ def excluir(request):
 
 
 
-@require_http_methods(["POST"])  
+@require_http_methods(["GET"])  
 def html_to_pdf_view(request):
     ''' converte html para pdf --> html.write_pdf(target='/tmp/mypdf.pdf')    fs = FileSystemStorage('/tmp') '''
-    itens = ItemOrcamento.objects.all
-    valor_total = list(ItemOrcamento.objects.aggregate(Sum('valor')).values())[0]
 
-    if valor_total != None:
-        status = None
-    else:
-        status = 'disabled'
+    try:
+        itens = ItemOrcamento.objects.all
+        valor_total = list(ItemOrcamento.objects.aggregate(Sum('valor')).values())[0]
 
-    context = {'itens': itens,
-               'valor_total': valor_total,
-               'status': status
-              }
+        if valor_total != None:
+            status = None
+        else:
+            status = 'disabled'
 
-    html_string = render_to_string('core/orcamento_template.html', context)
-    html = HTML(string=html_string)
+        context = {'itens': itens,
+                   'valor_total': valor_total,
+                   'status': status
+                  }
 
-    
+        html_string = render_to_string('core/orcamento_template.html', context)
+        html = HTML(string=html_string)
 
-    file = tempfile.TemporaryFile(dir="/tmp", mode="w+") # Compliant
-    html.write_pdf();
+        
 
-    
-    fs = FileSystemStorage(file)
-    with fs.open('mypdf.pdf') as pdf:
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
-    return response
+        
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            target_final = '/' + tmpdirname + '/mypdf.pdf'
+            html.write_pdf(target=target_final);
+
+        
+            fs = FileSystemStorage(tmpdirname)
+            with fs.open('mypdf.pdf') as pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+            return response
+
+    except Exception as e:
+        print(e)
 
     
