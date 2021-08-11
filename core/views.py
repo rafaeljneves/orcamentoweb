@@ -18,6 +18,7 @@ CORE_VIEWS = 'core/index.html'
 
 @require_http_methods(["POST", "GET"])  
 def index(request):
+    '''funcao que acessa a página inicial da aplicacao'''
     if request.method =='POST':
         form = ItemOrcamentoForm(request.POST or None)
 
@@ -49,6 +50,7 @@ def index(request):
 
 @require_http_methods(["POST"])  
 def excluir(request):
+    '''exclui item de orcamento da lista'''
     ItemOrcamento.objects.all().delete()
 
     context = {'itens': None,
