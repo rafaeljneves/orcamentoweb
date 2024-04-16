@@ -8,8 +8,9 @@ cssselect2==0.4.1
 defusedxml==0.6.0
 Django==3.2.25
 html5lib==1.1
+idna==2.10
+Pillow==10.3.0
 idna==3.7
-Pillow==10.2.0
 pycparser==2.20
 Pyphen==0.10.0
 pytz==2020.5
