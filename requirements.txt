@@ -15,7 +15,7 @@ Pyphen==0.10.0
 pytz==2020.5
 requests==2.31.0
 six==1.15.0
-sqlparse==0.4.4
+sqlparse==0.5.0
 tinycss2==1.1.0
 urllib3==1.26.18
 WeasyPrint==52.2
